@@ -1,17 +1,8 @@
-﻿using AngleSharp;
-using AngleSharp.Html.Parser;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
-using HtmlAgilityPack;
-using System.IO;
 
 namespace TestForParsing
 {
@@ -19,11 +10,13 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            CsQueryParsing csQueryParsing = new CsQueryParsing();
-            foreach (var item in csQueryParsing.Parsing())
-            {
-                Console.WriteLine(item);
-            }
+            //CsQueryParsing csQueryParsing = new CsQueryParsing();
+            //foreach (var item in csQueryParsing.Parsing())
+            //{
+            //    Console.WriteLine(item);
+            //}
+            WebDriverParsing webDriver = new WebDriverParsing();
+            webDriver.Parsing();
             Console.ReadKey();
         }
 
@@ -48,7 +41,7 @@ namespace TestForParsing
             }
         }
 
-        private static void DirectDatabaseUse(WebClientParsing webClientParsing)
+        private static void DirectDatabaseUse(AngleSharpParsing webClientParsing)
         {
             string connectionString = "server=localhost;user id=root;persistsecurityinfo=True;database=forvisualstudio;password=admin";
 
