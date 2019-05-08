@@ -30,7 +30,7 @@ namespace TestForParsing
 
         public override string ToString()
         {
-            return $"Name: {Name}\nDiscount: {Discount}{Label}\nImage: {Image}\nURL: {URL}\n";
+            return $"Name: {Name}\nDiscount: {Discount} {Label}\nImage: {Image}\nURL: {URL}\n";
         }
     }
 }

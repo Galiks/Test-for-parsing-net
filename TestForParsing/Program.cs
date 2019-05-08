@@ -24,9 +24,15 @@ namespace TestForParsing
             var watch = System.Diagnostics.Stopwatch.StartNew();
             var list = restSharpParsing.Parsing();
             watch.Stop();
-            Console.WriteLine(watch.ElapsedMilliseconds / 1000);
+            Console.WriteLine(watch.ElapsedMilliseconds);
             Console.WriteLine(list.Count);
-            foreach (var item in list)
+            restSharpParsing = new RestSharpParsing();
+            watch = System.Diagnostics.Stopwatch.StartNew();
+            var list2 = restSharpParsing.AnotherParsing();
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            Console.WriteLine(list2.Count);
+            foreach (var item in list2.Intersect(list))
             {
                 Console.WriteLine(item);
             }
