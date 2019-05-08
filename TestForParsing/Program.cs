@@ -10,13 +10,21 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            //CsQueryParsing csQueryParsing = new CsQueryParsing();
-            //foreach (var item in csQueryParsing.Parsing())
+            //AngleSharpParsing angleSharp = new AngleSharpParsing();
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
+            //var angleSharpParsingListResult = angleSharp.Parsing();
+            //watch.Stop();
+            //Console.WriteLine(watch.ElapsedMilliseconds / 1000);
+            //Console.WriteLine(angleSharpParsingListResult.Count);
+            //foreach (var item in angleSharpParsingListResult)
             //{
             //    Console.WriteLine(item);
             //}
-            WebDriverParsing webDriver = new WebDriverParsing();
-            webDriver.Parsing();
+            RestSharpParsing restSharpParsing = new RestSharpParsing();
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            restSharpParsing.Parsing();
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds / 1000);
             Console.ReadKey();
         }
 
@@ -36,8 +44,7 @@ namespace TestForParsing
                 foreach (var item in result)
                 {
                     Console.WriteLine(item);
-                }
-                
+                }              
             }
         }
 

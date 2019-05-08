@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace TestForParsing
 {
-    class HtmlAgilityPackParsing
+    class HtmlAgilityPackParsing : IParsing
     {
         private const int defaultPageCount = 30;
         private const string addressOfSiteForMaxPage = "https://letyshops.com/shops?page=1";
@@ -23,15 +23,14 @@ namespace TestForParsing
         }
 
         public List<Shop> Parsing()
-        {
-
-            
+        {         
             for (int i = 1; i <= GetMaxPage(); i++)
             {
-
                 Console.WriteLine(i);
-                var htmlWeb = new HtmlWeb();
-                htmlWeb.OverrideEncoding = Encoding.UTF8;
+                var htmlWeb = new HtmlWeb
+                {
+                    OverrideEncoding = Encoding.UTF8
+                };
                 var document = htmlWeb.Load(addressOfSiteForParsing + i);
                 var node = document.DocumentNode.SelectNodes("*//a[@class='b-teaser__inner']");
                 foreach (var item in node)
@@ -41,12 +40,10 @@ namespace TestForParsing
                     String label = GetLabel(item);
                     String url = GetURL(item);
                     String image = GetImage(item);
-
                     if (name != null & discount != Double.NaN & label != null & url != null & image != null)
                     {
                         Shops.Add(new Shop(ConvertString(name), discount, label, image, url)); 
-                    }
-                    
+                    }                   
                 }
             }
 

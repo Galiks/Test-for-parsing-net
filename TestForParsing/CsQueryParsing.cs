@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace TestForParsing
 {
-    class CsQueryParsing
+    class CsQueryParsing : IParsing
     {
         private readonly int defaultMaxpage = 20;
         private List<Shop> Shops { get; set; }

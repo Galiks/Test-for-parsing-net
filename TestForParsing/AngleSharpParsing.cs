@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace TestForParsing
 {
-    class AngleSharpParsing
+    class AngleSharpParsing: IParsing
     {
         private const int _defaultPage = 30;
         private List<Shop> shops = new List<Shop>();
 
-        public  List<Shop> Parsing()
+        public List<Shop> Parsing()
         {
             WebClient webClient = new WebClient();
             webClient.Encoding = Encoding.UTF8;
             var html = webClient.DownloadString("https://letyshops.com/shops?page=1");
-            Parallel.For(1, MaxPage(html) + 1, ParseElements);
+            var tewt = GetMaxPage(html);
+            Parallel.For(1, GetMaxPage(html) + 1, ParseElements);
             return shops;
         }
 
-        private  void ParseElements(int i)
+        private void ParseElements(int i)
         {
             WebClient webClient = new WebClient();
             webClient.Encoding = Encoding.UTF8;
@@ -54,7 +55,7 @@ namespace TestForParsing
             }
         }
 
-         Int32 MaxPage(string html)
+        Int32 GetMaxPage(string html)
         {
             HtmlParser parser = new HtmlParser();
             var result = parser.ParseDocument(html).GetElementsByClassName("b-pagination__link");
@@ -65,7 +66,7 @@ namespace TestForParsing
                     return page;
                 }
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 if (result.Length == 0)
                 {
