@@ -22,9 +22,14 @@ namespace TestForParsing
             //}
             RestSharpParsing restSharpParsing = new RestSharpParsing();
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            restSharpParsing.Parsing();
+            var list = restSharpParsing.Parsing();
             watch.Stop();
             Console.WriteLine(watch.ElapsedMilliseconds / 1000);
+            Console.WriteLine(list.Count);
+            foreach (var item in list)
+            {
+                Console.WriteLine(item);
+            }
             Console.ReadKey();
         }
 
