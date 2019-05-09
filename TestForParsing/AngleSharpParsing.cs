@@ -43,17 +43,17 @@ namespace TestForParsing
             }
         }
 
-        private static string GetUrl(AngleSharp.Dom.IElement item)
+        private string GetUrl(AngleSharp.Dom.IElement item)
         {
             return item.GetElementsByClassName("b-teaser__inner").First().GetAttribute("href");
         }
 
-        private static string GetImage(AngleSharp.Dom.IElement item)
+        private string GetImage(AngleSharp.Dom.IElement item)
         {
             return item.GetElementsByClassName("b-teaser__cover").First().GetElementsByTagName("img").First().GetAttribute("src");
         }
 
-        private static string GetLabel(AngleSharp.Dom.IElement item)
+        private string GetLabel(AngleSharp.Dom.IElement item)
         {
             return item.GetElementsByClassName("b-shop-teaser__label ").Last().InnerHtml;
         }
