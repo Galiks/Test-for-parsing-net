@@ -10,31 +10,13 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            //AngleSharpParsing angleSharp = new AngleSharpParsing();
-            //var watch = System.Diagnostics.Stopwatch.StartNew();
-            //var angleSharpParsingListResult = angleSharp.Parsing();
-            //watch.Stop();
-            //Console.WriteLine(watch.ElapsedMilliseconds / 1000);
-            //Console.WriteLine(angleSharpParsingListResult.Count);
-            //foreach (var item in angleSharpParsingListResult)
-            //{
-            //    Console.WriteLine(item);
-            //}
-            RestSharpParsing restSharpParsing = new RestSharpParsing();
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            var list = restSharpParsing.Parsing();
-            watch.Stop();
-            Console.WriteLine(watch.ElapsedMilliseconds);
-            Console.WriteLine(list.Count);
-            restSharpParsing = new RestSharpParsing();
-            watch = System.Diagnostics.Stopwatch.StartNew();
-            var list2 = restSharpParsing.AnotherParsing();
-            watch.Stop();
-            Console.WriteLine(watch.ElapsedMilliseconds);
-            Console.WriteLine(list2.Count);
-            foreach (var item in list2.Intersect(list))
+            List<IParsing> parsings = new List<IParsing>() { new AngleSharpParsing(), new CsQueryParsing(), new Fizzler(), new HtmlAgilityPackParsing(), new RestSharpParsing(), new WebDriverParsing() };
+            foreach (var item in parsings)
             {
-                Console.WriteLine(item);
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                var list = item.Parsing();
+                watch.Stop();
+                Console.WriteLine($"Name: {item.ToString()}\nTime: {watch.ElapsedMilliseconds}\nCount: {list.Count}\n");
             }
             Console.ReadKey();
         }

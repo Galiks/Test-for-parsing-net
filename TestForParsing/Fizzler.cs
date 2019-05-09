@@ -48,11 +48,6 @@ namespace TestForParsing
                 {
                     Shops.Add(new Shop(name, discount, label, image, url));
                 }
-                else
-                {
-                    Console.WriteLine($"Номер страницы: {i}");
-                    Console.WriteLine($"Name: {name}\nDiscount: {discount}\nLabel: {label}\nImage: {image}\nURL: {url}\n");
-                }
             }
         }
 

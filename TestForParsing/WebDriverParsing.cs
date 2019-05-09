@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +13,11 @@ namespace TestForParsing
     //451 секунда
     class WebDriverParsing : IParsing
     {
-        private IReadOnlyCollection<IWebElement> webElements { get; set; }
+        private IReadOnlyCollection<IWebElement> WebElements { get; set; }
 
         public List<Shop> Parsing()
         {
+            ConcurrentBag<Shop> shops = new ConcurrentBag<Shop>(); 
             IWebDriver driver = new ChromeDriver();
             driver.Navigate().GoToUrl("https://megabonus.com/feed");
             var button = driver.FindElement(By.ClassName("see-more"));
@@ -32,12 +34,19 @@ namespace TestForParsing
                 }
             }
             var ul = driver.FindElement(By.ClassName("cacheback-block-list"));
-            webElements = ul.FindElements(By.TagName("li"));
-            Parallel.ForEach(webElements, ParseElements);
-            return null;
+            WebElements = ul.FindElements(By.TagName("li"));
+            Parallel.ForEach(WebElements, WebElement =>
+            {
+                var shop = ParseElements(WebElement);
+                if (shop != null)
+                {
+                    shops.Add(shop); 
+                }
+            });
+            return shops.ToList();
         }
 
-        private void ParseElements(IWebElement item)
+        private Shop ParseElements(IWebElement item)
         {
             var name = GetName(item);
             var fullDiscount = GetFullDiscount(item);
@@ -45,7 +54,11 @@ namespace TestForParsing
             var label = GetLabel(fullDiscount);
             var image = GetImage(item);
             var url = GetPage(item);
-            //Console.WriteLine($"Name: {name}\nDiscount: {discount}\nLabel: {label}\nImage: {image}\nURL: {url}\n");
+            if (name != null && !Double.IsNaN(discount) && label != null && image != null && url != null)
+            {
+                return new Shop(name, discount, label, image, url);
+            }
+            return null;
         }
 
         private String GetPage(IWebElement element)

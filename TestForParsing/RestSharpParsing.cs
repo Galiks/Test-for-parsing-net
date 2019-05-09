@@ -38,10 +38,11 @@ namespace TestForParsing
                 IRestResponse response = client.Execute(request);
                 JObject jsonParse = JObject.Parse(response.Content);
                 var listOfItems = jsonParse["items"];
-                foreach (var item in listOfItems)
-                {
-                    ParseElements(item);
-                }
+                //foreach (var item in listOfItems)
+                //{
+                //    ParseElements(item);
+                //}
+                Parallel.ForEach(listOfItems, ParseElements);
             }
             return Shops;
         }

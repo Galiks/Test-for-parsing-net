@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TestForParsing
 {
@@ -20,15 +21,15 @@ namespace TestForParsing
             {
                 var document = CQ.CreateFromUrl("https://letyshops.com/shops?page=" + i);
                 var domObjects = document["a.b-teaser__inner"];
-                foreach (var item in domObjects.ToList())
+                Parallel.ForEach(domObjects, domObject =>
                 {
                     Shop shop;
-                    if ((shop = GetElements(item)) != null)
+                    if ((shop = GetElements(domObject)) != null)
                     {
                         Shops.Add(shop);
                     }
 
-                }
+                });
             }
 
             return Shops;

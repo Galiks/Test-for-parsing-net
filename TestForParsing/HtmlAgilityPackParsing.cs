@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace TestForParsing
@@ -23,31 +24,40 @@ namespace TestForParsing
         }
 
         public List<Shop> Parsing()
-        {         
+        {
             for (int i = 1; i <= GetMaxPage(); i++)
             {
-                Console.WriteLine(i);
                 var htmlWeb = new HtmlWeb
                 {
                     OverrideEncoding = Encoding.UTF8
                 };
                 var document = htmlWeb.Load(addressOfSiteForParsing + i);
-                var node = document.DocumentNode.SelectNodes("*//a[@class='b-teaser__inner']");
-                foreach (var item in node)
+                var nodes = document.DocumentNode.SelectNodes("*//a[@class='b-teaser__inner']");
+                Parallel.ForEach(nodes, node =>
                 {
-                    String name = GetName(item);
-                    double discount = GetDiscount(item);
-                    String label = GetLabel(item);
-                    String url = GetURL(item);
-                    String image = GetImage(item);
-                    if (name != null & discount != Double.NaN & label != null & url != null & image != null)
+                    var shop = ParseElements(node);
+                    if (shop != null)
                     {
-                        Shops.Add(new Shop(ConvertString(name), discount, label, image, url)); 
-                    }                   
-                }
+                        Shops.Add(shop); 
+                    }
+                });
             }
 
             return Shops;
+        }
+
+        private Shop ParseElements(HtmlNode item)
+        {
+            String name = GetName(item);
+            double discount = GetDiscount(item);
+            String label = GetLabel(item);
+            String url = GetURL(item);
+            String image = GetImage(item);
+            if (name != null & discount != Double.NaN & label != null & url != null & image != null)
+            {
+                return new Shop(ConvertString(name), discount, label, image, url);
+            }
+            return null;
         }
 
         private string GetName(HtmlNode node)

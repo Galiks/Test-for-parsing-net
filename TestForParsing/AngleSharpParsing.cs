@@ -28,31 +28,58 @@ namespace TestForParsing
         {
             WebClient webClient = new WebClient();
             webClient.Encoding = Encoding.UTF8;
-            string html = webClient.DownloadString($"https://letyshops.com/shops?page={i}");
+            string page = "https://letyshops.com/shops?page=" + i;
+            string html = webClient.DownloadString(page);
             HtmlParser parser = new HtmlParser();
             var result = parser.ParseDocument(html).GetElementsByClassName("b-teaser");
-
             foreach (var item in result)
             {
-                var name = item.GetElementsByClassName("b-teaser__title").First().InnerHtml.ToString().Substring(17);
-                name = name.Substring(0, name.Length - 13);
-                double discount = 0;
-                var discounts = item.GetElementsByClassName("b-shop-teaser__cash");
-                if (discounts.Count() == 0)
-                {
-                    string temp = item.GetElementsByClassName("b-shop-teaser__new-cash").First().InnerHtml;
-                    discount = Double.Parse(temp, CultureInfo.InvariantCulture);
-                }
-                else
-                {
-                    string temp = item.GetElementsByClassName("b-shop-teaser__cash").First().InnerHtml;
-                    discount = Double.Parse(temp, CultureInfo.InvariantCulture);
-                }
-                var label = item.GetElementsByClassName("b-shop-teaser__label ").Last().InnerHtml;
-                var image = item.GetElementsByClassName("b-teaser__cover").First().GetElementsByTagName("img").First().GetAttribute("src");
-                var url = item.GetElementsByClassName("b-teaser__inner").First().GetAttribute("href");
+                var name = GetName(item);
+                var discount = GetDiscount(item);
+                string label = GetLabel(item);
+                string image = GetImage(item);
+                string url = GetUrl(item);
                 shops.Add(new Shop(name, discount, label, image, url));
             }
+        }
+
+        private static string GetUrl(AngleSharp.Dom.IElement item)
+        {
+            return item.GetElementsByClassName("b-teaser__inner").First().GetAttribute("href");
+        }
+
+        private static string GetImage(AngleSharp.Dom.IElement item)
+        {
+            return item.GetElementsByClassName("b-teaser__cover").First().GetElementsByTagName("img").First().GetAttribute("src");
+        }
+
+        private static string GetLabel(AngleSharp.Dom.IElement item)
+        {
+            return item.GetElementsByClassName("b-shop-teaser__label ").Last().InnerHtml;
+        }
+
+        private double GetDiscount(AngleSharp.Dom.IElement item)
+        {
+            double discount;
+            var discounts = item.GetElementsByClassName("b-shop-teaser__cash");
+            if (discounts.Count() == 0)
+            {
+                string temp = item.GetElementsByClassName("b-shop-teaser__new-cash").First().InnerHtml;
+                discount = Double.Parse(temp, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                string temp = item.GetElementsByClassName("b-shop-teaser__cash").First().InnerHtml;
+                discount = Double.Parse(temp, CultureInfo.InvariantCulture);
+            }
+
+            return discount;
+        }
+
+        private string GetName(AngleSharp.Dom.IElement item)
+        {
+            var name = item.GetElementsByClassName("b-teaser__title").First().InnerHtml.ToString().Substring(17);
+            return name.Substring(0, name.Length - 13);
         }
 
         Int32 GetMaxPage(string html)
