@@ -10,20 +10,18 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            Fizzler fizzler = new Fizzler();
-            var list = fizzler.Parsing();
-            Console.WriteLine(list.Count);
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            RequestLetyShops requestLetyShops = new RequestLetyShops();
-            requestLetyShops.MainMethod();
+            WebDriverAndFizzlerMegaBonusParsing webDriverAndFizzlerMegaBonusParsing = new WebDriverAndFizzlerMegaBonusParsing();
+            var list2 = webDriverAndFizzlerMegaBonusParsing.Parsing();
             watch.Stop();
             Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
-            var list2 = requestLetyShops.GetShops();
             Console.WriteLine(list2.Count);
-            foreach (var item in list2)
-            {
-                Console.WriteLine(item);
-            }
+            watch = System.Diagnostics.Stopwatch.StartNew();
+            WebDriverParsing webDriverParsing = new WebDriverParsing();
+            list2 = webDriverParsing.Parsing();
+            watch.Stop();
+            Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
+            Console.WriteLine(list2.Count);
             Console.ReadKey();
         }
 

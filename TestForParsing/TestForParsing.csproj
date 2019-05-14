@@ -287,6 +287,7 @@
     <Compile Include="Shop.cs" />
     <Compile Include="ShopContext.cs" />
     <Compile Include="AngleSharpParsing.cs" />
+    <Compile Include="WebDriverAndFizzlerMegaBonusParsing.cs" />
     <Compile Include="WebDriverParsing.cs" />
   </ItemGroup>
   <ItemGroup>

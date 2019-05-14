@@ -90,7 +90,6 @@ namespace TestForParsing
             {
                 return matcher.Value;
             }
-            Console.WriteLine(fullDiscount);
             return null;
         }
 
