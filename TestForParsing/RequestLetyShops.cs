@@ -1,5 +1,6 @@
 ﻿using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,24 @@ using System.Threading.Tasks;
 
 namespace TestForParsing
 {
-    class Fizzler : IParser
+    public class RequestLetyShops
     {
-        private const int defaultPageCount = 30;
-        private const string addressOfSiteForMaxPage = "https://letyshops.com/shops?page=1";
         private const string addressOfSiteForParsing = "https://letyshops.com/shops?page=";
-        private const string addressOfSite = "https://letyshops.com";
 
         private List<Shop> Shops { get; set; }
 
-        public Fizzler()
+        public RequestLetyShops()
         {
             Shops = new List<Shop>();
         }
 
-        public List<Shop> Parsing()
+        public void MainMethod()
         {
             Parallel.For(1, GetMaxPage() + 1, ParseElements);
+        }
+
+        public List<Shop> GetShops()
+        {
             return Shops;
         }
 
@@ -34,7 +36,12 @@ namespace TestForParsing
             {
                 OverrideEncoding = Encoding.UTF8
             };
-            var document = htmlWeb.Load(addressOfSiteForParsing + i);
+            string page = $"https://letyshops.com/shops?page={i}";
+            var client = new RestClient(page);
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(response.Content);
             var html = document.DocumentNode;
             var listOfShops = html.QuerySelectorAll("div.b-teaser > a");
             foreach (var item in listOfShops)
@@ -83,7 +90,7 @@ namespace TestForParsing
             {
                 discount = html.QuerySelector("div.b-teaser__caption > div.b-teaser__cashback-rate > div > div > span.b-shop-teaser__new-cash").InnerText.Trim(); ;
             }
-            if (Double.TryParse(discount.Replace('.',','), out double result))
+            if (Double.TryParse(discount.Replace('.', ','), out double result))
             {
                 return result;
             }

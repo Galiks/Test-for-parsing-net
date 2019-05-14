@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestForParsing
 {
-    class CsQueryParsing : IParsing
+    class CsQueryParsing : IParser
     {
         private readonly int defaultMaxpage = 20;
         private List<Shop> Shops { get; set; }

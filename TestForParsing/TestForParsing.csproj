@@ -279,9 +279,10 @@
     <Compile Include="Extension.cs" />
     <Compile Include="Fizzler.cs" />
     <Compile Include="HtmlAgilityPackParsing.cs" />
-    <Compile Include="IParsing.cs" />
+    <Compile Include="IParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestLetyShops.cs" />
     <Compile Include="RestSharpParsing.cs" />
     <Compile Include="Shop.cs" />
     <Compile Include="ShopContext.cs" />

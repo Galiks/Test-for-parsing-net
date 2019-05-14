@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace TestForParsing
 {
-    class HtmlAgilityPackParsing : IParsing
+    class HtmlAgilityPackParsing : IParser
     {
         private const int defaultPageCount = 30;
         private const string addressOfSiteForMaxPage = "https://letyshops.com/shops?page=1";

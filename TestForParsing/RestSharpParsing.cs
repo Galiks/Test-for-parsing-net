@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace TestForParsing
 {
     //1 секунда
-    class RestSharpParsing : IParsing
+    class RestSharpParsing : IParser
     {
 
         public List<Shop> Shops { get; set; }

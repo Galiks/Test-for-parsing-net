@@ -10,13 +10,19 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            List<IParsing> parsings = new List<IParsing>() { new AngleSharpParsing(), new CsQueryParsing(), new Fizzler(), new HtmlAgilityPackParsing(), new RestSharpParsing(), new WebDriverParsing() };
-            foreach (var item in parsings)
+            Fizzler fizzler = new Fizzler();
+            var list = fizzler.Parsing();
+            Console.WriteLine(list.Count);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            RequestLetyShops requestLetyShops = new RequestLetyShops();
+            requestLetyShops.MainMethod();
+            watch.Stop();
+            Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
+            var list2 = requestLetyShops.GetShops();
+            Console.WriteLine(list2.Count);
+            foreach (var item in list2)
             {
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-                var list = item.Parsing();
-                watch.Stop();
-                Console.WriteLine($"Name: {item.ToString()}\nTime: {watch.ElapsedMilliseconds}\nCount: {list.Count}\n");
+                Console.WriteLine(item);
             }
             Console.ReadKey();
         }

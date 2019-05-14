@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace TestForParsing
 {
     //451 секунда
-    class WebDriverParsing : IParsing
+    class WebDriverParsing : IParser
     {
         private IReadOnlyCollection<IWebElement> WebElements { get; set; }
 

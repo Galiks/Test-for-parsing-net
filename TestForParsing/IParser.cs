@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestForParsing
 {
-    interface IParsing
+    interface IParser
     {
         List<Shop> Parsing();
     }

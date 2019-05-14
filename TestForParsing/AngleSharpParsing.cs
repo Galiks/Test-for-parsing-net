@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TestForParsing
 {
-    class AngleSharpParsing: IParsing
+    class AngleSharpParsing: IParser
     {
         private const int _defaultPage = 30;
         private List<Shop> shops = new List<Shop>();
