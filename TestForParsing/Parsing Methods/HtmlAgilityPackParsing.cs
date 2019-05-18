@@ -18,8 +18,14 @@ namespace TestForParsing
 
         internal List<Shop> Shops { get; set; }
 
+        private HtmlWeb htmlWeb;
+
         public HtmlAgilityPackParsing()
         {
+            htmlWeb = new HtmlWeb
+            {
+                OverrideEncoding = Encoding.UTF8
+            };
             Shops = new List<Shop>();
         }
 
@@ -148,9 +154,7 @@ namespace TestForParsing
 
         private int GetMaxPage()
         {
-            string pageUrl = GetUrl(addressOfSiteForMaxPage);
-            var document = new HtmlDocument();
-            document.LoadHtml(pageUrl);
+            var document = htmlWeb.Load(addressOfSiteForMaxPage);
             var maxPageString = document.DocumentNode.SelectSingleNode("//ul[@class='b-pagination js-pagination']/li[5]");
             if (maxPageString == null)
             {
@@ -171,7 +175,7 @@ namespace TestForParsing
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        private string GetUrl(string url)
+        private string GetHTML(string url)
         {
             string pageUrl = "";
             var request = (HttpWebRequest)WebRequest.Create(url);

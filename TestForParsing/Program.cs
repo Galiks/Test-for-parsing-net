@@ -10,18 +10,8 @@ namespace TestForParsing
     {
         static void Main(string[] args)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            WebDriverAndFizzlerMegaBonusParsing webDriverAndFizzlerMegaBonusParsing = new WebDriverAndFizzlerMegaBonusParsing();
-            var list2 = webDriverAndFizzlerMegaBonusParsing.Parsing();
-            watch.Stop();
-            Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
-            Console.WriteLine(list2.Count);
-            watch = System.Diagnostics.Stopwatch.StartNew();
-            WebDriverParsing webDriverParsing = new WebDriverParsing();
-            list2 = webDriverParsing.Parsing();
-            watch.Stop();
-            Console.WriteLine($"Time: {watch.ElapsedMilliseconds}");
-            Console.WriteLine(list2.Count);
+            RestSharpCash4Brands restSharp = new RestSharpCash4Brands();
+            restSharp.Parsing();
             Console.ReadKey();
         }
 
