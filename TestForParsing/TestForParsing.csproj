@@ -280,6 +280,7 @@
     <Compile Include="Parsing Methods\Fizzler.cs" />
     <Compile Include="Parsing Methods\HtmlAgilityPackParsing.cs" />
     <Compile Include="Parsing Methods\IParser.cs" />
+    <Compile Include="Parsing Methods\NotParallelAngleSharpParsing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsing Methods\RequestLetyShops.cs" />

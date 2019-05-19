@@ -7,9 +7,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestForParsing
+namespace TestForParsing.Parsing_Methods
 {
-    class AngleSharpParsing: IParser
+    class NotParallelAngleSharpParsing
     {
         private const int _defaultPage = 30;
         private List<Shop> shops = new List<Shop>();
@@ -20,7 +20,10 @@ namespace TestForParsing
             webClient.Encoding = Encoding.UTF8;
             var html = webClient.DownloadString("https://letyshops.com/shops?page=1");
             var maxPage = GetMaxPage(html);
-            Parallel.For(1, GetMaxPage(html) + 1, ParseElements);
+            for (int i = 1; i <= maxPage; i++)
+            {
+                ParseElements(i);
+            }
             return shops;
         }
 
